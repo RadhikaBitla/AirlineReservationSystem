@@ -36,10 +36,6 @@ public class SendMail {
     
     public void sendEmailMessage() {
      
-     EMail email = new EMail();
-     //Sending test email
-     email.createAndSendEmail(emailAddressTo, msgSubject,msgText);
-     //Create email sending properties
      Properties props = new Properties();
      props.put("mail.smtp.auth", "true");
      props.put("mail.smtp.starttls.enable", "true");
