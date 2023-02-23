@@ -22,9 +22,9 @@ public class SendMail {
     private static String msgSubject = new String();
     private static String msgText = new String();
 
-    final String USER_NAME = "bitlaradhika3@gmail.com";   //User name of the Goole(gmail) account
-    final String PASSSWORD = "tzrdxtwfaqtdcleb";  //Password of the Goole(gmail) account
-    final String FROM_ADDRESS = "bitlaradhika3@gmail.com";  //From addresss
+    final String USER_NAME = "**********@gmail.com";   //User name of the Goole(gmail) account
+    final String PASSSWORD = "#######";  //Password of the Goole(gmail) account
+    final String FROM_ADDRESS = "#######@gmail.com";  //From addresss
  
     public SendMail() throws ClassNotFoundException, SQLException
     {
@@ -43,13 +43,13 @@ public class SendMail {
      Properties props = new Properties();
      props.put("mail.smtp.auth", "true");
      props.put("mail.smtp.starttls.enable", "true");
-     props.put("mail.smtp.host", "smtp.gmail.com");
-     props.put("mail.smtp.port", "587");
+     props.put("mail.smtp.host", "***.gmail.com");
+     props.put("mail.smtp.port", "***");
   
     Session session = Session.getInstance(props,
     new javax.mail.Authenticator() {
     protected PasswordAuthentication getPasswordAuthentication() {
-    return new PasswordAuthentication("bitlaradhika3@gmail.com", "tzrdxtwfaqtdcleb");
+    return new PasswordAuthentication("********@gmail.com", "");
    }
     });
      System.out.println("Authentication Success!!");
@@ -57,7 +57,7 @@ public class SendMail {
   try {
 
      Message message = new MimeMessage(session);
-     message.setFrom(new InternetAddress("bitlaradhika3@gmail.com")); //Set from address of the email
+     message.setFrom(new InternetAddress("************@gmail.com")); //Set from address of the email
      message.setContent(msgText,"text/html"); //set content type of the email
      
     message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(emailAddressTo)); //Set email recipient
