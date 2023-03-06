@@ -33,6 +33,21 @@ public class BookTicket extends javax.swing.JInternalFrame {
         AutoID();
     }
 
+           String ticketID;
+           String customerID;
+           String firstName;
+           String lastName;
+           String customerName;
+           String arrival;
+           String departure;
+           String contact;
+           String address;
+           String noofTickets;
+           String totalcost;
+           String duration="";
+           String gender="";
+           String date="";
+          
     String result="";
     String dob="";
     String flightID="";
@@ -542,20 +557,20 @@ public class BookTicket extends javax.swing.JInternalFrame {
 
     private void BookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookActionPerformed
 
-           String ticketID=TicketID.getText();
-           String customerID=CustomerID.getText();
-           String firstName=FirstName.getText();
-           String lastName=LastName.getText();
-           String customerName=firstName+lastName;
-           String arrival=(String) Arrival.getSelectedItem();
-           String departure=(String) Departure.getSelectedItem();
-           String contact=Contact.getText();
-           String address="";
-           String noofTickets=TotalTickets.getText();
-           String totalcost=TotalFare.getText();
-           String duration="";
-           String gender="";
-           String date="";
+           ticketID=TicketID.getText();
+           customerID=CustomerID.getText();
+           firstName=FirstName.getText();
+           lastName=LastName.getText();
+           customerName=firstName+lastName;
+           arrival=(String) Arrival.getSelectedItem();
+           departure=(String) Departure.getSelectedItem();
+           contact=Contact.getText();
+           address="";
+           noofTickets=TotalTickets.getText();
+           totalcost=TotalFare.getText();
+           duration="";
+           gender="";
+           date="";
           
           
         ResultSet rs;
@@ -638,18 +653,20 @@ public class BookTicket extends javax.swing.JInternalFrame {
        //sending email notification.
        
        emailID=JOptionPane.showInputDialog(null,"Ticket Booked Successfully,To get Bill Reciept Please Enter your Email ID:");
-        try {
-            SendMail send;
-            send = new SendMail();
-            send.sendEmailMessage();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BookTicket.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(BookTicket.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+       SendMail send=new SendMail(emailID,customerName,ticketID,noofTickets,totalcost);
+       send.sendEmailMessage();
        
-        
+       TicketID.setText("");
+       CustomerID.setText("");
+       FirstName.setText("");
+       LastName.setText("");
+       Arrival.resetKeyboardActions();
+       Departure.resetKeyboardActions();
+       Contact.setText("");
+       TotalTickets.setText("");
+       TotalFare.setText("");    
+       Fare.setText("");
+       Table.clearSelection();
     }//GEN-LAST:event_BookActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
@@ -707,7 +724,6 @@ public class BookTicket extends javax.swing.JInternalFrame {
     {
         return emailID;
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Arrival;
     private javax.swing.JButton Book;

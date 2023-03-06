@@ -306,6 +306,7 @@ public class AddFlight extends javax.swing.JInternalFrame {
             Fare.setText("");
             TotalSeats.setText("");
             Duration.setText("");
+           dob.setCalendar(null);
         }
         catch(SQLException e)
         {

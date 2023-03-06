@@ -415,7 +415,7 @@ public class AddCustomer extends javax.swing.JInternalFrame {
             {
                 FemaleOption.setSelected(false);
             }
-            DOB.cleanup();
+            DOB.setCalendar(null);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }

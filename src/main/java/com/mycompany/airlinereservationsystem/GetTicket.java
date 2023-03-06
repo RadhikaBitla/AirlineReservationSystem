@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class GetTicket extends javax.swing.JInternalFrame {
 
+    String ticketID;
     /**
      * Creates new form GetTicket
      */
@@ -58,6 +59,8 @@ public class GetTicket extends javax.swing.JInternalFrame {
         ticketcode = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        TicketCancel = new javax.swing.JButton();
+        deleted = new javax.swing.JLabel();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -195,16 +198,21 @@ public class GetTicket extends javax.swing.JInternalFrame {
             }
         });
 
+        TicketCancel.setText("Cancel Ticket");
+        TicketCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TicketCancelActionPerformed(evt);
+            }
+        });
+
+        deleted.setBackground(new java.awt.Color(102, 255, 204));
+        deleted.setForeground(new java.awt.Color(102, 255, 51));
+        deleted.setText("....");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(195, 195, 195)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(175, 175, 175)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(105, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -218,6 +226,16 @@ public class GetTicket extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(86, 86, 86))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(134, 134, 134)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(103, 103, 103)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TicketCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleted, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,10 +247,14 @@ public class GetTicket extends javax.swing.JInternalFrame {
                     .addComponent(Generate, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleted, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TicketCancel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41))
         );
 
@@ -259,7 +281,7 @@ public class GetTicket extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void GenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerateActionPerformed
-        String ticketID=ticketIDD.getText();
+        ticketID=ticketIDD.getText();
         PreparedStatement pre;
         Connection con;
         ResultSet rs;
@@ -307,15 +329,57 @@ public class GetTicket extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void reset()
+    {
+          ticketIDD.setText("");
+        Name.setText("");
+        From.setText("");
+        To.setText("");
+        Tickets.setText("");
+        ticketcode.setText("");
+        Date.setText("");
+        TotalFare.setText("");
+      
+    }
+    private void TicketCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TicketCancelActionPerformed
+        PreparedStatement pre;
+        Connection con;
+        ResultSet rs;
+        try
+        {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con=DriverManager.getConnection("jdbc:mysql://localhost/airlineSystem","root","Radhika@123");
+            
+            pre=con.prepareStatement("delete from ticket where TicketID=?");
+            pre.setString(1,ticketID);
+            int val=pre.executeUpdate();
+            if(val==1)
+            {
+            deleted.setText("Ticket Cancelled Successfully..");
+            }
+            else
+            {
+             deleted.setText("Ticket not cancelled");
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(GetTicket.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(GetTicket.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        reset();
+    }//GEN-LAST:event_TicketCancelActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Date;
     private javax.swing.JLabel From;
     private javax.swing.JButton Generate;
     private javax.swing.JLabel Name;
+    private javax.swing.JButton TicketCancel;
     private javax.swing.JLabel Tickets;
     private javax.swing.JLabel To;
     private javax.swing.JLabel TotalFare;
+    private javax.swing.JLabel deleted;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;

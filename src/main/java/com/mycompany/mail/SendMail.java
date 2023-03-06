@@ -8,64 +8,79 @@ package com.mycompany.mail;
  *
  * @author radhika
  */
-import com.mycompany.airlinereservationsystem.BookTicket;
-import java.sql.SQLException;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Properties;
-import java.io.*;
-import java.util.*;
+import javax.swing.JOptionPane;
 
 public class SendMail {
  
-    private static String emailAddressTo = new String();
-    private static String msgSubject = new String();
-    private static String msgText = new String();
-
-    final String USER_NAME = "**********@gmail.com";   //User name of the Goole(gmail) account
-    final String PASSSWORD = "#######";  //Password of the Goole(gmail) account
-    final String FROM_ADDRESS = "#######@gmail.com";  //From addresss
- 
-    public SendMail() throws ClassNotFoundException, SQLException
-    {
-        BookTicket bookTicket=new BookTicket();
-        emailAddressTo=bookTicket.getEmailID();
-        msgSubject="Flight_Ticket_Bill_Receipt";
-        msgText="hello, your ticket is succesfully booked, please visit our site again!!";
-    }
+    private String emailAddressTo = new String();
+    private String CustomerName = new String();
+    private String Tickets = new String();
+    private String TicketID = new String();
+    private String totalCost = new String();
     
+    private String msgSubject = new String();
+    private String msgText = new String();
+
+    final String USER_NAME = "AirLine Reservation System";   //User name of the Goole(gmail) account
+    final String PASSSWORD = "gataijlrnzfnzkgv";  //Password of the Goole(gmail) account
+    final String FROM_ADDRESS = "bitlaradhika3@gmail.com";  //From addresss
+ 
+   public SendMail(String email,String customer,String TicketID, String Tickets,String totalcost)
+    {
+        this.emailAddressTo=email;
+        this.CustomerName=customer;
+        this.Tickets=Tickets;
+        this.totalCost=totalcost;
+        this.TicketID=TicketID;
+    }
     public void sendEmailMessage() {
      
+     //Create email sending properties
      Properties props = new Properties();
      props.put("mail.smtp.auth", "true");
      props.put("mail.smtp.starttls.enable", "true");
-     props.put("mail.smtp.host", "***.gmail.com");
-     props.put("mail.smtp.port", "***");
+     props.put("mail.smtp.host", "smtp.gmail.com");
+     props.put("mail.smtp.port", "587");
   
     Session session = Session.getInstance(props,
     new javax.mail.Authenticator() {
     protected PasswordAuthentication getPasswordAuthentication() {
-    return new PasswordAuthentication("********@gmail.com", "");
+    return new PasswordAuthentication(FROM_ADDRESS, PASSSWORD);
    }
     });
-     System.out.println("Authentication Success!!");
 
   try {
 
+    // BookTicket
      Message message = new MimeMessage(session);
-     message.setFrom(new InternetAddress("************@gmail.com")); //Set from address of the email
-     message.setContent(msgText,"text/html"); //set content type of the email
-     
+     message.setFrom(new InternetAddress(FROM_ADDRESS)); //Set from address of the email
+     message.setContent("Dear "+CustomerName+", \n Your Ticket ID : "+TicketID+"\n No of Tickets: "+Tickets+"\n Total Bill cost: "+totalCost+"\n Please arrive to the airport before 40 mins of your flight departure..","text/html"); //set content type of the email  
     message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(emailAddressTo)); //Set email recipient
-    System.out.println(emailAddressTo);
-    message.setSubject(msgSubject); //Set email message subject
+    
+    message.setSubject("Flight_Ticket_Receipt"); //Set email message subject
     Transport.send(message); //Send email message
 
+   JOptionPane.showMessageDialog(null, "Email Sent, check your mail box!");
    System.out.println("sent email successfully!");
-   return;
+
   } catch (MessagingException e) {
        throw new RuntimeException(e);
   }
-  }
-    
+    }
+
+    public void setEmailAddressTo(String emailAddressTo) {
+        this.emailAddressTo = emailAddressTo;
+    }
+
+    public void setSubject(String subject) {
+        this.msgSubject = subject;
+    }
+
+    public void setMessageText(String msgText) {
+        this.msgText = msgText;
+    }
+ 
 }
